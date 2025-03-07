@@ -1,0 +1,207 @@
+local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+
+screenGui.Name = "AECLibreria"
+
+
+local mainFrame = Instance.new("Frame", screenGui)
+
+mainFrame.Size = UDim2.new(0, 300, 0, 400)
+
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+
+mainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+
+mainFrame.BorderColor3 = Color3.new(1, 0, 0)
+
+mainFrame.BorderSizePixel = 3
+
+mainFrame.Active = true
+
+mainFrame.Draggable = true
+
+
+local title = Instance.new("TextLabel", mainFrame)
+
+title.Size = UDim2.new(1, 0, 0, 30)
+
+title.Position = UDim2.new(0, 0, 0, 0)
+
+title.Text = "A.E.C Libreria REMAKE"
+
+title.TextColor3 = Color3.new(1, 0, 0)
+
+title.BackgroundColor3 = Color3.new(0, 0, 0)
+
+title.Font = Enum.Font.SciFi
+
+title.TextSize = 20
+
+
+local closeButton = Instance.new("TextButton", mainFrame)
+
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+
+closeButton.Position = UDim2.new(1, -30, 0, 0)
+
+closeButton.Text = "X"
+
+closeButton.TextColor3 = Color3.new(1, 0, 0)
+
+closeButton.BackgroundColor3 = Color3.new(0, 0, 0)
+
+closeButton.MouseButton1Click:Connect(function()
+
+    screenGui:Destroy()
+
+end)
+
+
+local function loadScript(scriptName, scriptUrl)
+
+    local success, err = pcall(function()
+
+        local script = game:HttpGet(scriptUrl)
+
+        loadstring(script)()
+
+    end)
+
+    if not success then
+
+        warn("Failed to load " .. scriptName .. ": " .. err)
+
+    end
+
+end
+
+
+local scripts = {
+
+    {"SYSTEM BROKEN", "https://scriptblox.com/raw/Universal-Script-System-Broken-29259"},
+
+    {"INFINITE YIELD", "https://rawscripts.net/raw/Infinite-Yield_500"},
+
+    {"PRIZZ ADMIN", "https://scriptblox.com/raw/Prison-Life-Prizz-26033"},
+
+    {"SUPER RING PARTS V3", "https://rawscripts.net/raw/Universal-Script-SUPER-RING-PARTS-V3-WITH-NO-MESSAGE-26385"},
+
+    {"BLACKHOLE", "https://rawscripts.net/raw/Universal-Script-Op-blackhole-script-20078"}
+
+}
+
+
+local buttonTemplate = Instance.new("TextButton")
+
+buttonTemplate.Size = UDim2.new(0.9, 0, 0, 40)
+
+buttonTemplate.Position = UDim2.new(0.05, 0, 0, 0)
+
+buttonTemplate.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+
+buttonTemplate.BorderColor3 = Color3.new(1, 0, 0)
+
+buttonTemplate.TextColor3 = Color3.new(1, 0, 0)
+
+buttonTemplate.Font = Enum.Font.SciFi
+
+buttonTemplate.TextSize = 16
+
+
+local function createButton(scriptName, scriptUrl, position)
+
+    local button = buttonTemplate:Clone()
+
+    button.Parent = mainFrame
+
+    button.Position = UDim2.new(0.05, 0, 0, position * 50 + 40)
+
+    button.Text = scriptName
+
+    button.MouseButton1Click:Connect(function()
+
+        loadScript(scriptName, scriptUrl)
+
+    end)
+
+end
+
+
+for i, script in ipairs(scripts) do
+
+    createButton(script[1], script[2], i)
+
+end
+
+
+local executorFrame = Instance.new("Frame", screenGui)
+
+executorFrame.Size = UDim2.new(0, 300, 0, 400)
+
+executorFrame.Position = UDim2.new(0.5, 20, 0.5, -200)
+
+executorFrame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+
+executorFrame.BorderColor3 = Color3.new(1, 0, 0)
+
+executorFrame.Visible = false
+
+executorFrame.Active = true
+
+executorFrame.Draggable = true
+
+
+local executorTitle = Instance.new("TextLabel", executorFrame)
+
+executorTitle.Size = UDim2.new(1, 0, 0, 30)
+
+executorTitle.Position = UDim2.new(0, 0, 0, 0)
+
+executorTitle.Text = "Executor"
+
+executorTitle.TextColor3 = Color3.new(1, 0, 0)
+
+executorTitle.BackgroundColor3 = Color3.new(0, 0, 0)
+
+executorTitle.Font = Enum.Font.SciFi
+
+executorTitle.TextSize = 20
+
+
+local executorBox = Instance.new("TextBox", executorFrame)
+
+executorBox.Size = UDim2.new(0.9, 0, 0.7, 0)
+
+executorBox.Position = UDim2.new(0.05, 0, 0.1, 0)
+
+executorBox.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+
+executorBox.TextColor3 = Color3.new(1, 0, 0)
+
+executorBox.Font = Enum.Font.SciFi
+
+executorBox.TextSize = 14
+
+executorBox.PlaceholderText = "Enter script here..."
+
+
+local executeButton = Instance.new("TextButton", executorFrame)
+
+executeButton.Size = UDim2.new(0.4, 0, 0.1, 0)
+
+executeButton.Position = UDim2.new(0.05, 0, 0.85, 0)
+
+executeButton.Text = "Execute"
+
+executeButton.TextColor3 = Color3.new(1, 0, 0)
+
+executeButton.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+
+executeButton.Font = Enum.Font.SciFi
+
+executeButton.TextSize = 14
+
+executeButton.MouseButton1Click:Connect(function()
+
+    loadstring(executorBox.Text)()
+
+end)
